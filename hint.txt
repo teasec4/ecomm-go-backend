@@ -1,0 +1,24 @@
+create a table 
+
+docker exec -it ecomm-mysql mysql -uroot -ppassword -e "CREATE DATABASE ecomm;"
+
+drop a table
+
+docker exec -it ecomm-mysql mysql -uroot -ppassword -e "DROP DATABASE ecomm;"
+
+create a migration
+
+docker run -it --rm \
+  --network host \
+  -v "$(pwd)/db:/db" \
+  migrate/migrate \
+  create -ext sql -dir /db/migrations init_schema
+  
+start migration
+
+docker run -it --rm \
+  --network host \
+  -v "$(pwd)/db:/db" \
+  migrate/migrate \
+  -path=/db/migrations \
+  -database "mysql://root:password@tcp(localhost:3306)/ecomm" up
