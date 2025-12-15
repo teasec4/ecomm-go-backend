@@ -14,7 +14,7 @@ docker run -it --rm \
   migrate/migrate \
   create -ext sql -dir /db/migrations init_schema
   
-start migration
+start migration !! 
 
 docker run -it --rm \
   --network host \
@@ -22,3 +22,10 @@ docker run -it --rm \
   migrate/migrate \
   -path=/db/migrations \
   -database "mysql://root:password@tcp(localhost:3306)/ecomm" up
+  
+  3th table 
+docker run -it --rm \
+  --network host \
+  -v "$(pwd)/db:/db" \
+  migrate/migrate:v4.17.0 \
+  create -ext sql -dir /db/migrations add_sessions_table
