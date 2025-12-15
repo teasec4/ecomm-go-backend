@@ -4,6 +4,9 @@ import (
 	"log"
 
 	"github.com/teasec4/ecomm-go-backend/db"
+	"github.com/teasec4/ecomm-go-backend/ecomm-api/handler"
+	"github.com/teasec4/ecomm-go-backend/ecomm-api/server"
+	"github.com/teasec4/ecomm-go-backend/ecomm-api/storer"
 )
 
 func main(){
@@ -13,4 +16,8 @@ func main(){
 	}
 	defer db.Close()
 	log.Println("successfully connected to db")
+	
+	st := storer.NewMySQLStorer(db.GetDB())
+	serv := server.NewServer(st)
+	ndl := handler.NewHandler(serv)
 }
