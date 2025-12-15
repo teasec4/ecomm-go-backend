@@ -20,4 +20,6 @@ func main(){
 	st := storer.NewMySQLStorer(db.GetDB())
 	serv := server.NewServer(st)
 	ndl := handler.NewHandler(serv)
+	handler.RegisterRoutes(ndl)
+	handler.Start(":8080")
 }

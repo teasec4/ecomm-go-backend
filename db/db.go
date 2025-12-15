@@ -2,7 +2,7 @@ package db
 
 import (
 	"fmt"
-
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -11,7 +11,10 @@ type Database struct{
 }
 
 func NewDatabase() (*Database, error){
-	db, err := sqlx.Open("mysql", "root:password@tcp(localhost:3306/ecomm?parseTime=true")
+	db, err := sqlx.Open(
+		"mysql",
+		"root:password@tcp(localhost:3306)/ecomm?parseTime=true",
+)
 	if err != nil{
 		return nil, fmt.Errorf("error opening db %w", err)
 	}
