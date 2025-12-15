@@ -64,7 +64,7 @@ func (ms *MySQLStorer) UpdateProduct(ctx context.Context, p *Product) (*Product,
 }
 
 func (ms *MySQLStorer) DeleteProduct(ctx context.Context, id int64) error{
-	res, err := ms.db.ExecContext(ctx, "DELETE FROM products WHERE id = ?", id)
+	res, err := ms.db.ExecContext(ctx, "DELETE FROM products WHERE id=?", id)
 	if err != nil {
 		return fmt.Errorf("error deleting product %w", err)
 	}
@@ -134,13 +134,13 @@ func createOrderItem(ctx context.Context, tx *sqlx.Tx, oi *OrderItem) error {
 
 func (ms *MySQLStorer) GetOrder(ctx context.Context, id int64) (*Order, error){
 	var o Order
-	err := ms.db.GetContext(ctx, &o, "SELECT * FROM orders WHERE id = ?", id)
+	err := ms.db.GetContext(ctx, &o, "SELECT * FROM orders WHERE id=?", id)
 	if err != nil{
 		return nil, fmt.Errorf("error getting order: %w", err)
 	}
 	
 	var items []OrderItem
-	err = ms.db.SelectContext(ctx, &items, "SELECT * FROM order_items WHERE order_id = ?", id)
+	err = ms.db.SelectContext(ctx, &items, "SELECT * FROM order_items WHERE order_id=?", id)
 	if err != nil{
 		return nil, fmt.Errorf("error getting order items: %w", err)
 	}
