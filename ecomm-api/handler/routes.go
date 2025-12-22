@@ -32,6 +32,7 @@ func RegisterRoutes(handler *handler) *chi.Mux{
 		})
 	
 	r.Route("/users", func(r chi.Router) {
+		r.Use()
 			r.Post("/", handler.createUser)
 			r.Get("/", handler.listUsers)
 			r.Patch("/", handler.updateUser)
